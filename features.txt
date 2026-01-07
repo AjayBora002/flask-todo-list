@@ -1,0 +1,17 @@
+Core Featurs :-
+
+1. User login
+2. User logout
+3. Add new tasks
+4. See all tasks
+5. Update tasks
+
+
+Technologies and Tools Used :-
+
+1. Flask :- main python web framework
+2. SQLite :- Simple databses stored in a file
+3. SQLAlchemy :- ORM to interact with database
+4. Flask_wtf :-Form validation (eg.,login, add task)
+5. jinja2 :- to render dynamic html templates
+6. Flask-Login :- manages logged in sessions
