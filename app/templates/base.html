@@ -2,36 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}To-Do List{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}To-Do App{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <header>
-        <div class="container">
-        <h1>My To-Do List Application</h1>
-        <nav>
-            <a href="{{ url_for('tasks.view_tasks') }}">Home</a>
-            {%if 'user_id' in session %}
-                <a href="{{ url_for('auth.logout') }}">Logout</a>
-            {% else %}
-                <a href="{{ url_for('auth.login') }}">Login</a>
-            {% endif %}
-        </nav>
+        <div class="nav-container">
+            <a href="{{ url_for('tasks.view_tasks') }}" class="logo">✨ ToDo<span class="logo-accent">List</span></a>
+            <nav>
+                <a href="{{ url_for('tasks.view_tasks') }}" class="nav-link">Dashboard</a>
+                {% if 'user_id' in session %}
+                    <a href="{{ url_for('auth.logout') }}" class="nav-link btn-logout">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="nav-link">Login</a>
+                {% endif %}
+            </nav>
         </div>
-    </header>   
-    <main>
-        <div class="container">
+    </header> 
+
+    <main>  
+        <div class="main-container">
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
-                        <div class="flash {{ category }}">{{ message }}</div>
+                        <div class="flash flash-{{ category }}">{{ message }}</div>
                     {% endfor %}
                 {% endif %}
             {% endwith %}
+            
             {% block content %}{% endblock %}
         </div>
+    </main>
 
-<footer>
-    <div class="container">
-        <p>&copy; 2024 My To-Do List Application</p>
-    </div>
+    <footer>
+        <p>&copy; 2024 To-Do App. Built with Flask.</p>
+    </footer>
+</body>
+</html>

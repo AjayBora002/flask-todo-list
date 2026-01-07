@@ -1,8 +1,22 @@
 from app import db
-class Task(db.Model): # ye ek Task model hai jo database me tasks ko represent karega, mtlb ye table banayega
-    # db.model ye flask ko bolega jo class hai use real database table me convert kar de
+from flask_login import UserMixin
+from datetime import datetime
 
-    id = db.Column(db.Integer, primary_key=True) # unique id for each task
-    title = db.Column(db.String(100), nullable=False) # title of the task
-    status = db.Column(db.String(20), default="Pending") # status of the task, whether it's pending, in progress, or completed
-    
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(150), unique=True, nullable=False)
+    password = db.Column(db.String(150), nullable=False)
+    # Relationship to access all tasks of a user
+    tasks = db.relationship('Task', backref='author', lazy=True)
+
+class Task(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    status = db.Column(db.String(20), default="Pending")
+    priority = db.Column(db.String(20), default="Medium")
+    due_date = db.Column(db.Date, nullable=True)
+    # Foreign key to link a task to a specific user
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f'<Task {self.title}>'
